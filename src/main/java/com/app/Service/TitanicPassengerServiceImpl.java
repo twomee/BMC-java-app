@@ -31,7 +31,7 @@ public class TitanicPassengerServiceImpl implements TitanicPassengerService {
         int numBins = farePrices.size()/10;
         double minPrice = Collections.min(farePrices);
         double maxPrice = Collections.max(farePrices);
-        double binSize = (maxPrice - minPrice) / numBins;
+        double binSize = ((maxPrice - minPrice) + 1) / numBins;
 
         int[] histogram = new int[numBins];
 

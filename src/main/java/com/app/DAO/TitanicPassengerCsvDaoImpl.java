@@ -15,7 +15,7 @@ public class TitanicPassengerCsvDaoImpl extends TitanicPassengerDaoAbstract impl
         this.getData();
     }
     @Override
-    public Map<Integer,Passenger> getData() {
+    public List<Passenger> loadData() {
         String fileName = "titanic.csv";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(fileName);
 
@@ -23,8 +23,7 @@ public class TitanicPassengerCsvDaoImpl extends TitanicPassengerDaoAbstract impl
             throw new RuntimeException("CSV file not found in JAR.");
         }
         List<Passenger> passengerList = null;
-        try {
-            InputStreamReader reader = new InputStreamReader(inputStream);
+        try (InputStreamReader reader = new InputStreamReader(inputStream)){
             passengerList = new CsvToBeanBuilder<Passenger>(reader)
                     .withType(Passenger.class)
                     .build()
@@ -32,9 +31,7 @@ public class TitanicPassengerCsvDaoImpl extends TitanicPassengerDaoAbstract impl
         } catch (Exception e) {
             throw new RuntimeException("Failed to read CSV file: " + e.getMessage());
         }
-
-        this.convertPassengerListToPassengerMap(passengerList);
-        return this.passengerMap;
+        return passengerList;
     }
 
 }

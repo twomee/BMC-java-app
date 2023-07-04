@@ -8,7 +8,15 @@ import java.util.Map;
 
 public abstract class TitanicPassengerDaoAbstract {
     protected Map<Integer, Passenger> passengerMap;
-    abstract Map<Integer, Passenger> getData();
+
+    protected abstract List<Passenger> loadData();
+
+    protected Map<Integer, Passenger> getData() {
+        List<Passenger> passengerList = this.loadData();
+        this.convertPassengerListToPassengerMap(passengerList);
+        return this.passengerMap;
+    }
+
 
     protected void convertPassengerListToPassengerMap(List<Passenger> passengerList){
         for(Passenger passenger : passengerList){

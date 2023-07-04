@@ -16,9 +16,8 @@ public class TitanicPassengerSqlDaoImpl extends TitanicPassengerDaoAbstract{
 //    }
 
     @Override
-    public Map<Integer, Passenger> getData(){
+    public List<Passenger> loadData(){
         List<Passenger> passengerList = jdbcTemplate.query("SELECT * FROM users", new PassengerRowMapper());
-        this.convertPassengerListToPassengerMap(passengerList);
-        return this.passengerMap;
+        return passengerList;
     }
 }
